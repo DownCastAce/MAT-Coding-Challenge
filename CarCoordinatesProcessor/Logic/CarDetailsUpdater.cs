@@ -1,7 +1,7 @@
 ﻿using System;
-using ConsoleApp1.Models;
+using CarCoordinatesProcessor.Models;
 
-namespace ConsoleApp1.Logic
+namespace CarCoordinatesProcessor.Logic
 {
 	public static class CarDetailsUpdater
 	{

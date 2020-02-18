@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarCoordinatesProcessor", "CarCoordinatesProcessor\CarCoordinatesProcessor.csproj", "{6F50DEA7-773E-4C9D-9796-BDF4C5CED5D2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarCoordinatesProcessorTests", "CarCoordinatesProcessorTests\CarCoordinatesProcessorTests.csproj", "{3E8D757D-579E-41BD-B365-986A6617B9A4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6F50DEA7-773E-4C9D-9796-BDF4C5CED5D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F50DEA7-773E-4C9D-9796-BDF4C5CED5D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F50DEA7-773E-4C9D-9796-BDF4C5CED5D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F50DEA7-773E-4C9D-9796-BDF4C5CED5D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E8D757D-579E-41BD-B365-986A6617B9A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E8D757D-579E-41BD-B365-986A6617B9A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E8D757D-579E-41BD-B365-986A6617B9A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E8D757D-579E-41BD-B365-986A6617B9A4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {64DBAC93-E2FC-4B58-A230-1D5AE10A9D05}
+	EndGlobalSection
+EndGlobal

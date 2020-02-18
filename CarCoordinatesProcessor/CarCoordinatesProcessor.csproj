@@ -5,6 +5,7 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <ApplicationIcon />
         <StartupObject />
+        <AssemblyName>CarCoordinatesProcessor</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>

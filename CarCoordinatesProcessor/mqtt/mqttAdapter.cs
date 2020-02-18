@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 
-namespace ConsoleApp1.mqtt
+namespace CarCoordinatesProcessor.mqtt
 {
 
 	public class MqttAdapter : Imqtt
 	{
 		private readonly MqttClient _client;
 
-		public MqttAdapter(MqttClient.MqttMsgPublishEventHandler client_MqttMsgPublishReceived)
+		public MqttAdapter(MqttClient.MqttMsgPublishEventHandler clientMqttMsgPublishReceived)
 		{
 			_client = new MqttClient("127.0.0.1");
-			_client.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
+			_client.MqttMsgPublishReceived += clientMqttMsgPublishReceived;
 			
 			_client.Subscribe(new string[] { "carCoordinates" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
 			_client.Connect(Guid.NewGuid().ToString());

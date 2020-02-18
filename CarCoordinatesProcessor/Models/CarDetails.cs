@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ConsoleApp1.Models
+namespace CarCoordinatesProcessor.Models
 {
 	public class CarDetails
 	{

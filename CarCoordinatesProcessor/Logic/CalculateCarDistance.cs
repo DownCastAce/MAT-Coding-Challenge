@@ -1,7 +1,7 @@
-using ConsoleApp1.Models;
+using CarCoordinatesProcessor.Models;
 using GeoCoordinatePortable;
 
-namespace ConsoleApp1.Logic
+namespace CarCoordinatesProcessor.Logic
 {
     public static class CalculateCarDistance
     {

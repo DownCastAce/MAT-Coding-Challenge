@@ -1,8 +1,7 @@
-using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace ConsoleApp1.Models
+namespace CarCoordinatesProcessor.Models
 {
     public class CarStatus
     {
