@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
 using CarCoordinatesProcessor.Extension;
 using CarCoordinatesProcessor.Logic;
 using CarCoordinatesProcessor.Models;
 using CarCoordinatesProcessor.mqtt;
+using Newtonsoft.Json;
 
 namespace CarCoordinatesProcessor
 {
@@ -23,7 +23,7 @@ namespace CarCoordinatesProcessor
 	    
         public void Process(string carCoordinatesPayload)
         {
-            var currentCarDetails = JsonSerializer.Deserialize<CarCoordinates>(carCoordinatesPayload);
+            var currentCarDetails = JsonConvert.DeserializeObject<CarCoordinates>(carCoordinatesPayload);
 	        if (_allCarDetails.ContainsKey(currentCarDetails.CarIndex))
 	        {
 				#region Update Car Details
@@ -67,7 +67,7 @@ namespace CarCoordinatesProcessor
 				CarDetails carDetails = new CarDetails
 				{
 					CarLocationData = currentCarDetails,
-					Rank = currentCarDetails.CarIndex,
+					Rank = -1,
 					CurrentSpeed = 0,
 					CarIndex = currentCarDetails.CarIndex,
 					DistancedTraveled = 0,

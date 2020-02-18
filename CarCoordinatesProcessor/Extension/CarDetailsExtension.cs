@@ -11,7 +11,7 @@ namespace CarCoordinatesProcessor.Extension
             {
                 CarIndex = carDetails.CarIndex,
                 TimeStamp = carDetails.CarLocationData.TimeStamp,
-                Type = statusPayloadType.ToString()
+                Type = statusPayloadType.ToString().ToUpper()
             };
             
             switch (statusPayloadType)
@@ -23,7 +23,7 @@ namespace CarCoordinatesProcessor.Extension
                     result.Value = (int)carDetails.CurrentSpeed;
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(statusPayloadType), statusPayloadType, null);
+                    throw new ArgumentOutOfRangeException(nameof(statusPayloadType), statusPayloadType, $"The payload type {statusPayloadType} isn't yet support");
             }
 
             return result;

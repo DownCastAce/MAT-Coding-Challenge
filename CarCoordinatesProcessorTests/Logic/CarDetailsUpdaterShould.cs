@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using CarCoordinatesProcessor.Models;
 using CarCoordinatesProcessor.Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CarCoordinatesProcessorTests.Logic
 {
+    [ExcludeFromCodeCoverage]
     [TestClass]
     public class CarDetailsUpdaterShould
     {

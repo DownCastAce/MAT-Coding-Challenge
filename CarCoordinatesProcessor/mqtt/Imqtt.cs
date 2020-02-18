@@ -2,6 +2,6 @@
 {
 	public interface Imqtt
 	{
-		void PublishMessage<t>(string topic, t informationToPublish);
+		void PublishMessage<TT>(string topic, TT informationToPublish);
 	}
 }

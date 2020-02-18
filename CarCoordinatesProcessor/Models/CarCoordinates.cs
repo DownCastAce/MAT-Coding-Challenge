@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace CarCoordinatesProcessor.Models
 {
@@ -7,24 +6,24 @@ namespace CarCoordinatesProcessor.Models
 	{
 		public CarCoordinates() { }
 		
-		[JsonPropertyName("timestamp")]
+		[JsonProperty("timestamp")]
 		public long TimeStamp { get; set; }
-		[JsonPropertyName("carIndex")]
+		[JsonProperty("carIndex")]
 		public int CarIndex { get; set; }
-		[JsonPropertyName("location")]
+		[JsonProperty("location")]
 		public Location Location { get; set; }
 
 		public override string ToString()
 		{
-			return JsonSerializer.Serialize(this);
+			return JsonConvert.SerializeObject(this);
 		}
 	}
 
 	public class Location
 	{
-		[JsonPropertyName("lat")]
+		[JsonProperty("lat")]
 		public double Latitude { get; set; }
-		[JsonPropertyName("long")]
+		[JsonProperty("long")]
 		public double Longitude { get; set; }
 	}
 }

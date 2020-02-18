@@ -1,19 +1,18 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace CarCoordinatesProcessor.Models
 {
     public class Event
     {
-        [JsonPropertyName("timestamp")]
+        [JsonProperty("timestamp")]
         public long TimeStamp { get; set; }
 
-        [JsonPropertyName("text")]
+        [JsonProperty("text")]
         public string Message { get; set; }
         
         public override string ToString()
         {
-            return JsonSerializer.Serialize(this);
+            return JsonConvert.SerializeObject(this);
         }
     }
 }
