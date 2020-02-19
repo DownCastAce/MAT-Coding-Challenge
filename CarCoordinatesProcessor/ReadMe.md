@@ -116,6 +116,8 @@ I would then publish this to two different topics 'carStatus' and 'events'
 Example of the Webpage after carStatus and events message have been published
 ![Components](./WebPageExample.PNG)
 
+## Speed, Distance and Average Speed
+
 To Calculate the Speed I would need to get the Distance and time between two points.
 To do this I would need two entries for a single car, as in timestamp n and n-1. 
 To generate the Distance I used the GeoCoordinate Class which is a .Net Core prebuilt implemenation of the Haversine Formula, this formula calculates the distance between two points 'as-the-crow-flies'.
@@ -124,12 +126,20 @@ To generate the Time, I got the absolute difference between the timestamps of n 
 From the above it was a matter of dividing the distance by the time to generate the speed in mps, I required to provide the speed in mph.
 To convert to Miles from Meters I divide by 1609.344. and to convert the seconds to hours I divided by 3600.
 
+From the speed I kept a record so that at the end of a lap I could display the cars average speed during the lap.
+
+## Position
+
+To calculate the position I compared the Total Distance traveled as well as the Lap Number to determine the order of positions.
+
 ## Tests
 
 I have a Code Coverage of 72%
 But this is including not testable class like the Mqtt Client used which is not required to test as this should be handled by the implementer
 
-Excluding 
+Excluding these class allow the Code Coverage to reach 100%
 
+## Conclusion
 
-
+I can still add a lot more features to this project. Dependency Injection, overtaking events, storing the current data to ensure if the application fails it will return closer to the original then starting from a fresh.
+Also there is more potential to expand the multithreading of this application. Also the client used for Mqtt doesn't auto reconnect if it fails so this is a gap that would need to be covered or potential to move to MqttNet instead of M2MqttDotnetCore.
