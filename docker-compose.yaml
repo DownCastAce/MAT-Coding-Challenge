@@ -41,3 +41,10 @@ services:
                         - mqtt_to_websocket
                 ports:
                         - "127.0.0.1:8084:8084/tcp"
+
+        # CarCoordinatesProcessorApp
+        carcoordinatesprocessorapp:
+                container_name: carcoordinatesprocessorapp
+                depends_on: 
+                        - broker
+                image: downcastace/carcoordinatesprocessorapp:fifth

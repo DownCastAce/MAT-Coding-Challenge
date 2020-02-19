@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Threading;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 
@@ -16,7 +17,28 @@ namespace CarCoordinatesProcessor.mqtt
 			_client.MqttMsgPublishReceived += clientMqttMsgPublishReceived;
 			
 			_client.Subscribe(new string[] { "carCoordinates" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
-			_client.Connect(Guid.NewGuid().ToString());
+			bool connected = false;
+			while (!connected)
+			{
+				var connectionResult = -1;
+				try
+				{
+					connectionResult = _client.Connect(Guid.NewGuid().ToString());
+				}
+				catch (Exception e)
+				{
+					Thread.Sleep(1000);
+					Console.WriteLine($"{e.Message}\n{e.InnerException?.Message}");
+				}
+				
+				if (connectionResult == 0)
+					connected = true;
+				else
+				{
+					Thread.Sleep(1000);
+				}
+			}
+
 		}
 
 		/// <summary>
