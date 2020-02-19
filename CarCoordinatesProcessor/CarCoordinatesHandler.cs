@@ -15,10 +15,10 @@ namespace CarCoordinatesProcessor
 		private Dictionary<int, CarDetails> _allCarDetailsCache;
 		private Imqtt Client { get; }
 
-		public CarCoordinatesHandler(Imqtt client)
+		public CarCoordinatesHandler(Imqtt client, Dictionary<int, CarDetails> carDetails)
 		{
 			Client = client;
-			_allCarDetailsCache = new Dictionary<int, CarDetails>();
+			_allCarDetailsCache = carDetails;
 		}
 
 		/// <summary>
@@ -61,7 +61,7 @@ namespace CarCoordinatesProcessor
 					Client.PublishMessage("events", currentCarInformation.GenerateCarEvent(EventType.Lapcomplete));
 
 					currentCarInformation.PreviousLapTime = currentCarDetails.TimeStamp;
-					currentCarInformation.LapNumber += 1;
+					currentCarInformation.LapNumber++;
 				}
 
 				#endregion

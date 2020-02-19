@@ -114,6 +114,6 @@ I would then publish this to two different topics 'carStatus' and 'events'
       }
     ```
 Example of the Webpage after carStatus and events message have been published
-![Components](./Capture.PNG)
+![Components](./WebPageExample.PNG)
 
 

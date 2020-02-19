@@ -16,7 +16,7 @@ namespace CarCoordinatesProcessor
 		public MyApp()
 		{
 			_client = new MqttAdapter(client_MqttMsgPublishReceived);
-			_engine = new CarCoordinatesHandler(_client);
+			_engine = new CarCoordinatesHandler(_client, new Dictionary<int, CarDetails>());
 		}
 
 		public void Run()

@@ -51,7 +51,7 @@ namespace CarCoordinatesProcessor.Extension
             switch (eventType)
             {
                 case EventType.Lapcomplete:
-                    result.Message = $"Car {carDetails.CarIndex} | Lap {carDetails.LapNumber} | Average Speed : {Convert.ToInt32(carDetails.AverageSpeedPerLap[carDetails.LapNumber])}mph";
+                    result.Message = $"Car {carDetails.CarIndex} | Lap {carDetails.LapNumber} | Average Speed : {(int)carDetails.AverageSpeedPerLap[carDetails.LapNumber]}mph";
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(eventType), eventType, null);
