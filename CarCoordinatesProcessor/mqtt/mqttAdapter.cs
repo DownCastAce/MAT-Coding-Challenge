@@ -6,7 +6,6 @@ using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace CarCoordinatesProcessor.mqtt
 {
-
 	public class MqttAdapter : Imqtt
 	{
 		private readonly MqttClient _client;
@@ -17,12 +16,12 @@ namespace CarCoordinatesProcessor.mqtt
 			_client = new MqttClient(GetBrokerHostName());
 			_client.MqttMsgPublishReceived += clientMqttMsgPublishReceived;
 
-			_client.Subscribe(new string[] { "carCoordinates" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
-			bool connected = false;
+			_client.Subscribe(new string[] {"carCoordinates"}, new byte[] {MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE});
+
 			int count = 0;
-			while (!connected && count < retrys)
+			while (count < retrys)
 			{
-				var connectionResult = -1;
+				int connectionResult = -1;
 				try
 				{
 					connectionResult = _client.Connect(Guid.NewGuid().ToString(), "guest", "guest");
@@ -30,22 +29,20 @@ namespace CarCoordinatesProcessor.mqtt
 				catch (Exception e)
 				{
 					Thread.Sleep(1000);
-					Console.WriteLine($"Error occured while trying to connect to MQTT : {e.Message}\nError Message : {e.InnerException?.Message}");
+					Console.WriteLine(
+						$"Error occured while trying to connect to MQTT : {e.Message}\nError Message : {e.InnerException?.Message}");
 				}
 
 				if (connectionResult == 0)
 				{
-					connected = true;
 					Console.WriteLine("Successfully connected to the broker!");
+					return;
 				}
-				else
-				{
-					Thread.Sleep(1000);
-				}
+
+				Thread.Sleep(1000);
 
 				count++;
 			}
-
 		}
 
 		/// <summary>

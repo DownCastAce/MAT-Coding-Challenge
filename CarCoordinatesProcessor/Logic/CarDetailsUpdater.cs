@@ -25,8 +25,11 @@ namespace CarCoordinatesProcessor.Logic
 		{
 			if (carDetails.PreviousCarCoordinates != null)
 			{
-				double distanceTraveled = CalculateCarDistance.Distance(carDetails.CarLocationData.Location, carDetails.PreviousCarCoordinates.Location);
-				double elapsedTime = Math.Abs(carDetails.CarLocationData.TimeStamp - carDetails.PreviousCarCoordinates.TimeStamp) / 1000.00;
+				double distanceTraveled = CalculateCarDistance.Distance(carDetails.CarLocationData.Location,
+					carDetails.PreviousCarCoordinates.Location);
+				double elapsedTime =
+					Math.Abs(carDetails.CarLocationData.TimeStamp - carDetails.PreviousCarCoordinates.TimeStamp) /
+					1000.00;
 				carDetails.DistancedTraveled += distanceTraveled;
 				carDetails.CurrentSpeed = CalculateCarSpeed(distanceTraveled, elapsedTime);
 				if (!carDetails.AverageSpeedPerLap.ContainsKey(carDetails.LapNumber))
@@ -35,7 +38,8 @@ namespace CarCoordinatesProcessor.Logic
 				}
 				else
 				{
-					carDetails.AverageSpeedPerLap[carDetails.LapNumber] = (carDetails.AverageSpeedPerLap[carDetails.LapNumber] + carDetails.CurrentSpeed) / 2.00;
+					carDetails.AverageSpeedPerLap[carDetails.LapNumber] =
+						(carDetails.AverageSpeedPerLap[carDetails.LapNumber] + carDetails.CurrentSpeed) / 2.00;
 				}
 			}
 		}

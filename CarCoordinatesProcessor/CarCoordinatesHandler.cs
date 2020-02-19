@@ -11,7 +11,7 @@ namespace CarCoordinatesProcessor
 {
 	public class CarCoordinatesHandler
 	{
-		private readonly Location _startLine = new Location { Latitude = 52.069342, Longitude = -1.022140 };
+		private readonly Location _startLine = new Location {Latitude = 52.069342, Longitude = -1.022140};
 		private Dictionary<int, CarDetails> _allCarDetailsCache;
 		private Imqtt Client { get; }
 
@@ -27,7 +27,7 @@ namespace CarCoordinatesProcessor
 		/// <param name="carCoordinatesPayload"></param>
 		public void Process(string carCoordinatesPayload)
 		{
-			var currentCarDetails = JsonConvert.DeserializeObject<CarCoordinates>(carCoordinatesPayload);
+			CarCoordinates currentCarDetails = JsonConvert.DeserializeObject<CarCoordinates>(carCoordinatesPayload);
 			if (_allCarDetailsCache.ContainsKey(currentCarDetails.CarIndex))
 			{
 				#region Update Car Details
@@ -41,7 +41,8 @@ namespace CarCoordinatesProcessor
 
 				#region Publish Car Speed
 
-				Client.PublishMessage("carStatus", currentCarInformation.GenerateCarStatusPayload(StatusPayloadType.Speed));
+				Client.PublishMessage("carStatus",
+					currentCarInformation.GenerateCarStatusPayload(StatusPayloadType.Speed));
 
 				#endregion
 
@@ -49,14 +50,16 @@ namespace CarCoordinatesProcessor
 
 				if (currentCarInformation.Rank != currentCarInformation.PreviousRank)
 				{
-					Client.PublishMessage("carStatus", currentCarInformation.GenerateCarStatusPayload(StatusPayloadType.Position));
+					Client.PublishMessage("carStatus",
+						currentCarInformation.GenerateCarStatusPayload(StatusPayloadType.Position));
 				}
 
 				#endregion
 
 				#region Update Lap
 
-				if (CalculateCarDistance.Distance(_startLine, currentCarInformation.CarLocationData.Location) < 50.00 && (Math.Abs(currentCarInformation.PreviousLapTime - currentCarDetails.TimeStamp) / 1000.00) > 30.00)
+				if (CalculateCarDistance.Distance(_startLine, currentCarInformation.CarLocationData.Location) < 50.00 &&
+				    (Math.Abs(currentCarInformation.PreviousLapTime - currentCarDetails.TimeStamp) / 1000.00) > 30.00)
 				{
 					Client.PublishMessage("events", currentCarInformation.GenerateCarEvent(EventType.Lapcomplete));
 
@@ -76,7 +79,7 @@ namespace CarCoordinatesProcessor
 					CarIndex = currentCarDetails.CarIndex,
 					DistancedTraveled = 0,
 					PreviousRank = 0,
-					AverageSpeedPerLap = new Dictionary<int, double>() { { 1, 0.0 } },
+					AverageSpeedPerLap = new Dictionary<int, double>() {{1, 0.0}},
 					LapNumber = 1,
 					PreviousLapTime = currentCarDetails.TimeStamp
 				};
@@ -92,7 +95,9 @@ namespace CarCoordinatesProcessor
 		/// <returns></returns>
 		private int ReorderAllCarsAndGetCurrentCarsPosition(CarDetails currentCarInformation)
 		{
-			return _allCarDetailsCache.Values.OrderByDescending(x => x.LapNumber).ThenByDescending(x => x.DistancedTraveled).Select(x => x.CarIndex).ToList().IndexOf(currentCarInformation.CarIndex) + 1;
+			return _allCarDetailsCache.Values.OrderByDescending(x => x.LapNumber)
+				.ThenByDescending(x => x.DistancedTraveled).Select(x => x.CarIndex).ToList()
+				.IndexOf(currentCarInformation.CarIndex) + 1;
 		}
 	}
 }
