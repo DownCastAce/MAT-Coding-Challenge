@@ -4,9 +4,9 @@
     {
         static void Main(string[] args)
         {
-            MyApp tester = new MyApp();
+            MyApp telemetryProcessingEngine = new MyApp();
 
-            tester.Run();
+            telemetryProcessingEngine.Run();
         }
     }
 }

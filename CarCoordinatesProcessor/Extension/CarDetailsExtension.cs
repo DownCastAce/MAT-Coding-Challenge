@@ -17,7 +17,7 @@ namespace CarCoordinatesProcessor.Extension
             {
                 CarIndex = carDetails.CarIndex,
                 TimeStamp = carDetails.CarLocationData.TimeStamp,
-                Type = statusPayloadType.ToString().ToUpper()
+                Type = statusPayloadType.ToString().ToUpperInvariant()
             };
             
             switch (statusPayloadType)
