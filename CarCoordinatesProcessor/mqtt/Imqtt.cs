@@ -1,4 +1,4 @@
-﻿namespace CarCoordinatesProcessor.mqtt
+﻿namespace CarCoordinatesProcessor.Mqtt
 {
 	public interface Imqtt
 	{

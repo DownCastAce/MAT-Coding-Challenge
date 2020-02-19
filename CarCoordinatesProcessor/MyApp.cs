@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using CarCoordinatesProcessor.Models;
-using CarCoordinatesProcessor.mqtt;
+using CarCoordinatesProcessor.Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace CarCoordinatesProcessor

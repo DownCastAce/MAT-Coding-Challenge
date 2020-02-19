@@ -4,7 +4,7 @@ using System.Threading;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 
-namespace CarCoordinatesProcessor.mqtt
+namespace CarCoordinatesProcessor.Mqtt
 {
 	public class MqttAdapter : Imqtt
 	{

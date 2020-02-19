@@ -4,7 +4,7 @@ using System.Linq;
 using CarCoordinatesProcessor.Extension;
 using CarCoordinatesProcessor.Logic;
 using CarCoordinatesProcessor.Models;
-using CarCoordinatesProcessor.mqtt;
+using CarCoordinatesProcessor.Mqtt;
 using Newtonsoft.Json;
 
 namespace CarCoordinatesProcessor

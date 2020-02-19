@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using CarCoordinatesProcessor;
 using CarCoordinatesProcessor.Models;
-using CarCoordinatesProcessor.mqtt;
+using CarCoordinatesProcessor.Mqtt;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Newtonsoft.Json;
