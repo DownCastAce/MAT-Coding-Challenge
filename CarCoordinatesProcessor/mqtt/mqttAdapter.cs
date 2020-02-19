@@ -10,35 +10,54 @@ namespace CarCoordinatesProcessor.mqtt
 	public class MqttAdapter : Imqtt
 	{
 		private readonly MqttClient _client;
+		private int retrys = 10;
 
 		public MqttAdapter(MqttClient.MqttMsgPublishEventHandler clientMqttMsgPublishReceived)
 		{
-			_client = new MqttClient("127.0.0.1");
+			_client = new MqttClient(GetBrokerHostName());
 			_client.MqttMsgPublishReceived += clientMqttMsgPublishReceived;
 			
 			_client.Subscribe(new string[] { "carCoordinates" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
 			bool connected = false;
-			while (!connected)
+			int count = 0;
+			while (!connected && count < retrys)
 			{
 				var connectionResult = -1;
 				try
 				{
-					connectionResult = _client.Connect(Guid.NewGuid().ToString());
+					connectionResult = _client.Connect(Guid.NewGuid().ToString(), "guest", "guest");
 				}
 				catch (Exception e)
 				{
 					Thread.Sleep(1000);
-					Console.WriteLine($"{e.Message}\n{e.InnerException?.Message}");
+					Console.WriteLine($"Error occured while trying to connect to MQTT : {e.Message}\nError Message : {e.InnerException?.Message}");
 				}
-				
+
 				if (connectionResult == 0)
+				{
 					connected = true;
+					Console.WriteLine("Successfully connected to the broker!");
+				}
 				else
 				{
 					Thread.Sleep(1000);
 				}
+
+				count++;
 			}
 
+		}
+
+		/// <summary>
+		/// Retrieve the hostName to use to connect to the Broker
+		/// </summary>
+		/// <returns></returns>
+		private static string GetBrokerHostName()
+		{
+			#if DEBUG
+				return "127.0.0.1";
+			#endif
+			return "broker";
 		}
 
 		/// <summary>

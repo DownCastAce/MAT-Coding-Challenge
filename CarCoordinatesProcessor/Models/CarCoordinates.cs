@@ -4,12 +4,19 @@ namespace CarCoordinatesProcessor.Models
 {
 	public class CarCoordinates
 	{
-		public CarCoordinates() { }
-		
+		/// <summary>
+		/// Timestamp for current location
+		/// </summary>
 		[JsonProperty("timestamp")]
 		public long TimeStamp { get; set; }
+		/// <summary>
+		/// Car Identifier
+		/// </summary>
 		[JsonProperty("carIndex")]
 		public int CarIndex { get; set; }
+		/// <summary>
+		/// GPS Coordinates
+		/// </summary>
 		[JsonProperty("location")]
 		public Location Location { get; set; }
 

@@ -5,6 +5,12 @@ namespace CarCoordinatesProcessor.Extension
 {
     public static class CarDetailsExtension
     {
+        /// <summary>
+        /// Generates the Car Status Payload based on the CarDetails and Payload required
+        /// </summary>
+        /// <param name="carDetails"></param>
+        /// <param name="statusPayloadType"></param>
+        /// <returns></returns>
         public static CarStatus GenerateCarStatusPayload(this CarDetails carDetails, StatusPayloadType statusPayloadType)
         {
             CarStatus result = new CarStatus
@@ -29,6 +35,12 @@ namespace CarCoordinatesProcessor.Extension
             return result;
         }
 
+        /// <summary>
+        /// Generates the Car Event Payload based on the CarDetails and Payload required
+        /// </summary>
+        /// <param name="carDetails"></param>
+        /// <param name="eventType"></param>
+        /// <returns></returns>
         public static Event GenerateCarEvent(this CarDetails carDetails, EventType eventType)
         {
             Event result = new Event()

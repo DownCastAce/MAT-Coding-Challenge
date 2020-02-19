@@ -47,4 +47,4 @@ services:
                 container_name: carcoordinatesprocessorapp
                 depends_on: 
                         - broker
-                image: downcastace/carcoordinatesprocessorapp:fifth
+                image: downcastace/carcoordinatesprocessorapp:final

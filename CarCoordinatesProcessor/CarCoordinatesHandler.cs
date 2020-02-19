@@ -12,23 +12,27 @@ namespace CarCoordinatesProcessor
     public class CarCoordinatesHandler
     {
 	    private readonly Location _startLine = new Location { Latitude = 52.069342, Longitude = -1.022140};
-	    private Dictionary<int, CarDetails> _allCarDetails;
+	    private Dictionary<int, CarDetails> _allCarDetailsCache;
 	    private Imqtt Client { get; }
 
-	    public CarCoordinatesHandler(Imqtt client, Dictionary<int, CarDetails> allCarDetails)
+	    public CarCoordinatesHandler(Imqtt client, Dictionary<int, CarDetails> allCarDetailsCache)
 	    {
 		    Client = client;
-		    _allCarDetails = allCarDetails;
+		    _allCarDetailsCache = allCarDetailsCache;
 	    }
 	    
+		/// <summary>
+		/// Process the Car Coordinates and update cache and publish relevant Status and Events
+		/// </summary>
+		/// <param name="carCoordinatesPayload"></param>
         public void Process(string carCoordinatesPayload)
         {
             var currentCarDetails = JsonConvert.DeserializeObject<CarCoordinates>(carCoordinatesPayload);
-	        if (_allCarDetails.ContainsKey(currentCarDetails.CarIndex))
+	        if (_allCarDetailsCache.ContainsKey(currentCarDetails.CarIndex))
 	        {
 				#region Update Car Details
 
-				CarDetails currentCarInformation = _allCarDetails[currentCarDetails.CarIndex];
+				CarDetails currentCarInformation = _allCarDetailsCache[currentCarDetails.CarIndex];
 				currentCarInformation.UpdateCarCoordinates(currentCarDetails);
 				currentCarInformation.UpdateCarSpeed();
 				currentCarInformation.UpdateRank(ReorderAllCarsAndGetCurrentCarsPosition(currentCarInformation));
@@ -77,13 +81,18 @@ namespace CarCoordinatesProcessor
 					PreviousLapTime = currentCarDetails.TimeStamp
 				};
 
-				_allCarDetails.Add(currentCarDetails.CarIndex, carDetails);
+				_allCarDetailsCache.Add(currentCarDetails.CarIndex, carDetails);
 	        }
         }
 
+		/// <summary>
+		/// Orders all cars positions and returns the current cars position
+		/// </summary>
+		/// <param name="currentCarInformation"></param>
+		/// <returns></returns>
         private int ReorderAllCarsAndGetCurrentCarsPosition(CarDetails currentCarInformation)
         {
-	        return _allCarDetails.Values.OrderByDescending(x => x.LapNumber).ThenByDescending(x => x.DistancedTraveled).Select(x => x.CarIndex).ToList().IndexOf(currentCarInformation.CarIndex) + 1;
+	        return _allCarDetailsCache.Values.OrderByDescending(x => x.LapNumber).ThenByDescending(x => x.DistancedTraveled).Select(x => x.CarIndex).ToList().IndexOf(currentCarInformation.CarIndex) + 1;
         }
     }
 }
