@@ -35,7 +35,7 @@ namespace CarCoordinatesProcessor.Logic
 				}
 				else
 				{
-					carDetails.AverageSpeedPerLap[carDetails.LapNumber] = (carDetails.AverageSpeedPerLap[carDetails.LapNumber] + carDetails.CurrentSpeed) / 2;
+					carDetails.AverageSpeedPerLap[carDetails.LapNumber] = (carDetails.AverageSpeedPerLap[carDetails.LapNumber] + carDetails.CurrentSpeed) / 2.00;
 				}
 			}
 		}

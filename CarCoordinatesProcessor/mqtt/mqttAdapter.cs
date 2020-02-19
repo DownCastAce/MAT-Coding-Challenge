@@ -16,7 +16,7 @@ namespace CarCoordinatesProcessor.mqtt
 		{
 			_client = new MqttClient(GetBrokerHostName());
 			_client.MqttMsgPublishReceived += clientMqttMsgPublishReceived;
-			
+
 			_client.Subscribe(new string[] { "carCoordinates" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
 			bool connected = false;
 			int count = 0;
@@ -54,9 +54,9 @@ namespace CarCoordinatesProcessor.mqtt
 		/// <returns></returns>
 		private static string GetBrokerHostName()
 		{
-			#if DEBUG
-				return "127.0.0.1";
-			#endif
+#if DEBUG
+			return "127.0.0.1";
+#endif
 			return "broker";
 		}
 

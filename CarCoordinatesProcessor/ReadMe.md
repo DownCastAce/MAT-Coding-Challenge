@@ -116,4 +116,20 @@ I would then publish this to two different topics 'carStatus' and 'events'
 Example of the Webpage after carStatus and events message have been published
 ![Components](./WebPageExample.PNG)
 
+To Calculate the Speed I would need to get the Distance and time between two points.
+To do this I would need two entries for a single car, as in timestamp n and n-1. 
+To generate the Distance I used the GeoCoordinate Class which is a .Net Core prebuilt implemenation of the Haversine Formula, this formula calculates the distance between two points 'as-the-crow-flies'.
+To generate the Time, I got the absolute difference between the timestamps of n and n-1
+
+From the above it was a matter of dividing the distance by the time to generate the speed in mps, I required to provide the speed in mph.
+To convert to Miles from Meters I divide by 1609.344. and to convert the seconds to hours I divided by 3600.
+
+## Tests
+
+I have a Code Coverage of 72%
+But this is including not testable class like the Mqtt Client used which is not required to test as this should be handled by the implementer
+
+Excluding 
+
+
 
