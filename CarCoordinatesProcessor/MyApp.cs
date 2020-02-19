@@ -10,11 +10,13 @@ namespace CarCoordinatesProcessor
 	public class MyApp
 	{
 		private Dictionary<int, CarDetails> _allCarDetailsCache = new Dictionary<int, CarDetails>();
+		private readonly CarCoordinatesHandler _engine;
 		internal Imqtt _client { get; set; }
 
 		public MyApp()
 		{
 			_client = new MqttAdapter(client_MqttMsgPublishReceived);
+			_engine = new CarCoordinatesHandler(_client);
 		}
 
 		public void Run()
@@ -30,8 +32,7 @@ namespace CarCoordinatesProcessor
 
 		void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
 		{
-			CarCoordinatesHandler engine = new CarCoordinatesHandler(_client, _allCarDetailsCache);
-			engine.Process(Encoding.Default.GetString(e.Message));
+			_engine.Process(Encoding.Default.GetString(e.Message));
 		}
 	}
 }

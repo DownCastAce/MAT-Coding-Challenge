@@ -15,10 +15,10 @@ namespace CarCoordinatesProcessor
 		private Dictionary<int, CarDetails> _allCarDetailsCache;
 		private Imqtt Client { get; }
 
-		public CarCoordinatesHandler(Imqtt client, Dictionary<int, CarDetails> allCarDetailsCache)
+		public CarCoordinatesHandler(Imqtt client)
 		{
 			Client = client;
-			_allCarDetailsCache = allCarDetailsCache;
+			_allCarDetailsCache = new Dictionary<int, CarDetails>();
 		}
 
 		/// <summary>
