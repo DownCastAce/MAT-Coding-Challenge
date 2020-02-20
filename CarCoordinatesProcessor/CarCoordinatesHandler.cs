@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using CarCoordinatesProcessor.Extension;
@@ -11,14 +10,14 @@ namespace CarCoordinatesProcessor
 {
 	public class CarCoordinatesHandler
 	{
-		private readonly Location _startLine = new Location {Latitude = 52.069342, Longitude = -1.022140};
-		private Dictionary<int, CarDetails> _allCarDetailsCache;
-		private Imqtt Client { get; }
+		
+		private static Dictionary<int, CarDetails> _allCarDetailsCache;
+		private IMqttPublisher PublisherClient { get; }
 
-		public CarCoordinatesHandler(Imqtt client, Dictionary<int, CarDetails> carDetails)
+		public CarCoordinatesHandler(IMqttPublisher publisherClient, Dictionary<int, CarDetails> carCache)
 		{
-			Client = client;
-			_allCarDetailsCache = carDetails;
+			PublisherClient = publisherClient;
+			_allCarDetailsCache = carCache;
 		}
 
 		/// <summary>
@@ -41,8 +40,7 @@ namespace CarCoordinatesProcessor
 
 				#region Publish Car Speed
 
-				Client.PublishMessage("carStatus",
-					currentCarInformation.GenerateCarStatusPayload(StatusPayloadType.Speed));
+				PublisherClient.PublishMessage("carStatus", currentCarInformation.GenerateCarStatusPayload(StatusPayloadType.Speed));
 
 				#endregion
 
@@ -50,18 +48,16 @@ namespace CarCoordinatesProcessor
 
 				if (currentCarInformation.Rank != currentCarInformation.PreviousRank)
 				{
-					Client.PublishMessage("carStatus",
-						currentCarInformation.GenerateCarStatusPayload(StatusPayloadType.Position));
+					PublisherClient.PublishMessage("carStatus", currentCarInformation.GenerateCarStatusPayload(StatusPayloadType.Position));
 				}
 
 				#endregion
 
 				#region Update Lap
 
-				if (CalculateCarDistance.Distance(_startLine, currentCarInformation.CarLocationData.Location) < 50.00 &&
-				    (Math.Abs(currentCarInformation.PreviousLapTime - currentCarDetails.TimeStamp) / 1000.00) > 30.00)
+				if (CarLocationProcessor.FinishedLap(currentCarInformation))
 				{
-					Client.PublishMessage("events", currentCarInformation.GenerateCarEvent(EventType.Lapcomplete));
+					PublisherClient.PublishMessage("events", currentCarInformation.GenerateCarEvent(EventType.LapComplete));
 
 					currentCarInformation.PreviousLapTime = currentCarDetails.TimeStamp;
 					currentCarInformation.LapNumber++;
@@ -95,8 +91,10 @@ namespace CarCoordinatesProcessor
 		/// <returns></returns>
 		private int ReorderAllCarsAndGetCurrentCarsPosition(CarDetails currentCarInformation)
 		{
-			return _allCarDetailsCache.Values.OrderByDescending(x => x.LapNumber)
-				.ThenByDescending(x => x.DistancedTraveled).Select(x => x.CarIndex).ToList()
+			return _allCarDetailsCache.Values
+				.OrderByDescending(x => x.LapNumber)
+				.ThenByDescending(x => x.DistancedTraveled)
+				.Select(x => x.CarIndex).ToList()
 				.IndexOf(currentCarInformation.CarIndex) + 1;
 		}
 	}

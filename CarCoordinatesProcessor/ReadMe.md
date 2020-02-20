@@ -141,5 +141,5 @@ Excluding these class allow the Code Coverage to reach 100%
 
 ## Conclusion
 
-I can still add a lot more features to this project. Dependency Injection, overtaking events, storing the current data to ensure if the application fails it will return closer to the original then starting from a fresh.
+I can still add a lot more features to this project. Overtaking events, storing the current data to ensure if the application fails it will return closer to the original then starting from a fresh.
 Also there is more potential to expand the multithreading of this application. Also the client used for Mqtt doesn't auto reconnect if it fails so this is a gap that would need to be covered or potential to move to MqttNet instead of M2MqttDotnetCore.

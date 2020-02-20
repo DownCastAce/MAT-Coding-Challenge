@@ -52,7 +52,7 @@ namespace CarCoordinatesProcessorTests.Extension
         {
             CarDetails carDetails = JsonConvert.DeserializeObject<CarDetails>(FirstCarAddedPayload);
 
-            Event actualResult = carDetails.GenerateCarEvent(EventType.Lapcomplete);
+            Event actualResult = carDetails.GenerateCarEvent(EventType.LapComplete);
             
             Assert.AreEqual(ExpectedCarEvent, actualResult.ToString());
         }

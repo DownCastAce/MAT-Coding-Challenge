@@ -11,8 +11,7 @@ namespace CarCoordinatesProcessor.Extension
 		/// <param name="carDetails"></param>
 		/// <param name="statusPayloadType"></param>
 		/// <returns></returns>
-		public static CarStatus GenerateCarStatusPayload(this CarDetails carDetails,
-			StatusPayloadType statusPayloadType)
+		public static CarStatus GenerateCarStatusPayload(this CarDetails carDetails, StatusPayloadType statusPayloadType)
 		{
 			CarStatus result = new CarStatus
 			{
@@ -30,8 +29,7 @@ namespace CarCoordinatesProcessor.Extension
 					result.Value = (int) carDetails.CurrentSpeed;
 					break;
 				default:
-					throw new ArgumentOutOfRangeException(nameof(statusPayloadType), statusPayloadType,
-						$"The payload type {statusPayloadType} isn't yet support");
+					throw new ArgumentOutOfRangeException(nameof(statusPayloadType), statusPayloadType, $"The payload type {statusPayloadType} isn't yet support");
 			}
 
 			return result;
@@ -52,9 +50,8 @@ namespace CarCoordinatesProcessor.Extension
 
 			switch (eventType)
 			{
-				case EventType.Lapcomplete:
-					result.Message =
-						$"Car {carDetails.CarIndex} | Lap {carDetails.LapNumber} | Average Speed : {(int) carDetails.AverageSpeedPerLap[carDetails.LapNumber]}mph";
+				case EventType.LapComplete:
+					result.Message = $"Car {carDetails.CarIndex} | Lap {carDetails.LapNumber} | Average Speed : {(int) carDetails.AverageSpeedPerLap[carDetails.LapNumber]}mph";
 					break;
 				default:
 					throw new ArgumentOutOfRangeException(nameof(eventType), eventType, null);
@@ -72,6 +69,6 @@ namespace CarCoordinatesProcessor.Extension
 
 	public enum EventType
 	{
-		Lapcomplete = 1
+		LapComplete = 1
 	}
 }

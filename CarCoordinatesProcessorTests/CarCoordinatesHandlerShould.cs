@@ -13,7 +13,7 @@ namespace CarCoordinatesProcessorTests
     [TestClass]
     public class CarCoordinatesHandlerShould
     {
-        private readonly Mock<Imqtt> _fakeMqttClient = new Mock<Imqtt>();
+        private readonly Mock<IMqttPublisher> _fakeMqttClient = new Mock<IMqttPublisher>();
         
         private const string ExamplePayload = "{\"CarLocationData\":{\"timestamp\":1582061329767,\"carIndex\":1,\"location\":{\"lat\":52.06905479305401,\"long\":-1.0225002257078422}},\"PreviousCarCoordinates\":{\"timestamp\":1582061329566,\"carIndex\":1,\"location\":{\"lat\":52.068903120291246,\"long\":-1.0226858502212455}},\"DistancedTraveled\":4393.099131115184,\"CurrentSpeed\":235.08107800782315,\"Rank\":1,\"PreviousRank\":1,\"CarIndex\":1,\"LapNumber\":1,\"AverageSpeedPerLap\":{\"1\":220.27818243236658},\"PreviousLapTime\":1582061322767}";
 

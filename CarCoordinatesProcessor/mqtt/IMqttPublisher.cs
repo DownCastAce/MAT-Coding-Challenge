@@ -1,6 +1,6 @@
 ﻿namespace CarCoordinatesProcessor.Mqtt
 {
-	public interface Imqtt
+	public interface IMqttPublisher
 	{
 		void PublishMessage<TT>(string topic, TT informationToPublish);
 	}

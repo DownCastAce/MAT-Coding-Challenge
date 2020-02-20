@@ -6,20 +6,26 @@ using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace CarCoordinatesProcessor.Mqtt
 {
-	public class MqttAdapter : Imqtt
+	public class MqttAdapter : IMqttAdapter
 	{
+		private readonly CarCoordinatesHandler _engine;
 		private readonly MqttClient _client;
-		private int retrys = 10;
+		private const int Retries = 10;
 
-		public MqttAdapter(MqttClient.MqttMsgPublishEventHandler clientMqttMsgPublishReceived)
+		public MqttAdapter(CarCoordinatesHandler engine, MqttClient client)
 		{
-			_client = new MqttClient(GetBrokerHostName());
-			_client.MqttMsgPublishReceived += clientMqttMsgPublishReceived;
+			_engine = engine;
+			_client = client;
+		}
 
-			_client.Subscribe(new string[] {"carCoordinates"}, new byte[] {MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE});
+		public void Connect()
+		{
+			_client.MqttMsgPublishReceived += Client_MqttMsgPublishReceived;
+
+			_client.Subscribe(new[] {"carCoordinates"}, new[] {MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE});
 
 			int count = 0;
-			while (count < retrys)
+			while (count < Retries)
 			{
 				int connectionResult = -1;
 				try
@@ -44,28 +50,15 @@ namespace CarCoordinatesProcessor.Mqtt
 				count++;
 			}
 		}
-
+		
 		/// <summary>
-		/// Retrieve the hostName to use to connect to the Broker
+		/// This subsribes to the events published by the Mqtt Broker and handles them
 		/// </summary>
-		/// <returns></returns>
-		private static string GetBrokerHostName()
+		/// <param name="sender"></param>
+		/// <param name="mqttMsgPublishEventArgs"></param>
+		private void Client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs mqttMsgPublishEventArgs)
 		{
-#if DEBUG
-			return "127.0.0.1";
-#endif
-			return "broker";
-		}
-
-		/// <summary>
-		/// Publish Messages to the chosen Topic
-		/// </summary>
-		/// <typeparam name="TT"></typeparam>
-		/// <param name="topic"></param>
-		/// <param name="informationToPublish"></param>
-		public void PublishMessage<TT>(string topic, TT informationToPublish)
-		{
-			_client.Publish(topic, Encoding.UTF8.GetBytes(informationToPublish.ToString()));
+			_engine.Process(Encoding.Default.GetString(mqttMsgPublishEventArgs.Message));
 		}
 	}
 }
